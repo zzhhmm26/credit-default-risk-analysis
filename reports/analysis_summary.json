@@ -1,0 +1,133 @@
+{
+  "quality": {
+    "rows": 30000,
+    "columns": 24,
+    "duplicate_rows": 35,
+    "missing_cells": 0,
+    "target_values": [
+      0,
+      1
+    ],
+    "repayment_codes": [
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "overall_default_rate": 0.2212,
+  "zero_or_negative_average_bill_customers": 1071,
+  "undefined_repayment_ratio_customers": 966,
+  "tables": {
+    "credit_limit": [
+      {
+        "credit_limit_band": "<=100k",
+        "customers": 12498,
+        "default_rate": 0.29476716274603937
+      },
+      {
+        "credit_limit_band": "100k-200k",
+        "customers": 7880,
+        "default_rate": 0.1947969543147208
+      },
+      {
+        "credit_limit_band": "200k-500k",
+        "customers": 9416,
+        "default_rate": 0.14804587935429056
+      },
+      {
+        "credit_limit_band": ">500k",
+        "customers": 206,
+        "default_rate": 0.11165048543689321
+      }
+    ],
+    "age": [
+      {
+        "age_band": "21-29",
+        "customers": 9618,
+        "default_rate": 0.22842586816385943
+      },
+      {
+        "age_band": "30-39",
+        "customers": 11238,
+        "default_rate": 0.20252714006050898
+      },
+      {
+        "age_band": "40-49",
+        "customers": 6464,
+        "default_rate": 0.2297339108910891
+      },
+      {
+        "age_band": "50-59",
+        "customers": 2341,
+        "default_rate": 0.24861170439982913
+      },
+      {
+        "age_band": "60+",
+        "customers": 339,
+        "default_rate": 0.2831858407079646
+      }
+    ],
+    "overdue_months": [
+      {
+        "overdue_months": "0",
+        "customers": 19931,
+        "default_rate": 0.11710400883046511
+      },
+      {
+        "overdue_months": "1",
+        "customers": 4426,
+        "default_rate": 0.298237686398554
+      },
+      {
+        "overdue_months": "2",
+        "customers": 1899,
+        "default_rate": 0.3875724065297525
+      },
+      {
+        "overdue_months": "3",
+        "customers": 1154,
+        "default_rate": 0.5086655112651647
+      },
+      {
+        "overdue_months": "4",
+        "customers": 951,
+        "default_rate": 0.573080967402734
+      },
+      {
+        "overdue_months": "5",
+        "customers": 298,
+        "default_rate": 0.5738255033557047
+      },
+      {
+        "overdue_months": "6",
+        "customers": 1341,
+        "default_rate": 0.703206562266965
+      }
+    ],
+    "risk_segment": [
+      {
+        "risk_segment": "低风险",
+        "customers": 19931,
+        "default_rate": 0.11710400883046511
+      },
+      {
+        "risk_segment": "中风险",
+        "customers": 6325,
+        "default_rate": 0.3250592885375494
+      },
+      {
+        "risk_segment": "高风险",
+        "customers": 3744,
+        "default_rate": 0.5998931623931624
+      }
+    ]
+  }
+}
