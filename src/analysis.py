@@ -27,6 +27,65 @@ def _rate_table(frame: pd.DataFrame, group: str) -> pd.DataFrame:
     )
 
 
+def _draw_rate_bars(ax: plt.Axes, table: pd.DataFrame, title: str) -> None:
+    """绘制带数值标签的违约率柱状图。"""
+    rates = table["default_rate"]
+    colors = sns.color_palette("Blues", n_colors=len(table) + 3)[3:]
+    labels = table.iloc[:, 0].astype(str).tolist()
+    bars = ax.bar(labels, rates, color=colors, edgecolor="white", linewidth=1)
+    ax.set(title=title, xlabel="", ylabel="Default rate")
+    ax.yaxis.set_major_formatter(lambda value, _: f"{value:.0%}")
+    ax.set_ylim(0, min(1, max(0.1, float(rates.max()) * 1.2)))
+    ax.bar_label(bars, labels=[f"{value:.1%}" for value in rates], padding=3, fontsize=9)
+    sns.despine(ax=ax)
+
+
+def _save_overview_figures(data: pd.DataFrame, tables: dict[str, pd.DataFrame]) -> None:
+    """生成适合 GitHub 首页展示的总体构成图和综合仪表板。"""
+    counts = data[TARGET].value_counts().reindex([0, 1], fill_value=0)
+    fig, ax = plt.subplots(figsize=(7, 5.5))
+    ax.pie(
+        counts, labels=["No default", "Default"], colors=["#2563EB", "#EF4444"],
+        autopct="%1.1f%%", startangle=90, counterclock=False,
+        wedgeprops={"width": 0.42, "edgecolor": "white", "linewidth": 2},
+        textprops={"fontsize": 11},
+    )
+    ax.text(0, 0.06, f"{len(data):,}", ha="center", va="center", fontsize=24, weight="bold")
+    ax.text(0, -0.10, "customers", ha="center", va="center", fontsize=10, color="#64748B")
+    ax.set_title("Customer default composition", fontsize=16, weight="bold", pad=18)
+    fig.tight_layout()
+    fig.savefig(FIGURE_DIR / "default_composition.png", dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+    axes[0, 0].pie(
+        counts, labels=["No default", "Default"], colors=["#2563EB", "#EF4444"],
+        autopct="%1.1f%%", startangle=90, counterclock=False,
+        wedgeprops={"width": 0.38, "edgecolor": "white", "linewidth": 2},
+    )
+    axes[0, 0].set_title("Portfolio composition", weight="bold")
+
+    overdue = tables["overdue_months"]
+    axes[0, 1].plot(
+        overdue.iloc[:, 0].astype(str), overdue["default_rate"],
+        color="#DC2626", marker="o", linewidth=2.5, markersize=7,
+    )
+    for x, value in enumerate(overdue["default_rate"]):
+        axes[0, 1].annotate(f"{value:.1%}", (x, value), xytext=(0, 8), textcoords="offset points", ha="center", fontsize=9)
+    axes[0, 1].set(title="Default rate rises with overdue months", xlabel="Overdue months", ylabel="Default rate")
+    axes[0, 1].yaxis.set_major_formatter(lambda value, _: f"{value:.0%}")
+    axes[0, 1].set_ylim(0, 0.8)
+    sns.despine(ax=axes[0, 1])
+
+    _draw_rate_bars(axes[1, 0], tables["credit_utilization"], "Credit utilization")
+    _draw_rate_bars(axes[1, 1], tables["repayment_ratio"], "Repayment ratio")
+    fig.suptitle("Credit Default Risk Dashboard", fontsize=22, weight="bold", y=1.02)
+    fig.text(0.5, 0.005, "Source: UCI Default of Credit Card Clients · 30,000 observations", ha="center", color="#64748B")
+    fig.tight_layout()
+    fig.savefig(FIGURE_DIR / "risk_dashboard.png", dpi=180, bbox_inches="tight")
+    plt.close(fig)
+
+
 def run_analysis(raw_path: Path = RAW_PATH) -> dict[str, object]:
     frame = pd.read_csv(raw_path)
     quality = quality_summary(frame)
@@ -88,12 +147,12 @@ def run_analysis(raw_path: Path = RAW_PATH) -> dict[str, object]:
                 {"低风险": "Low", "中风险": "Medium", "高风险": "High"}
             )
         fig, ax = plt.subplots(figsize=(8, 5))
-        sns.barplot(data=plot_table, x=plot_table.columns[0], y="default_rate", color="#4472C4", ax=ax)
-        ax.set(title=f"Default rate by {name.replace('_', ' ')}", xlabel="", ylabel="Default rate")
-        ax.yaxis.set_major_formatter(lambda value, _: f"{value:.0%}")
+        _draw_rate_bars(ax, plot_table, f"Default rate by {name.replace('_', ' ')}")
         fig.tight_layout()
         fig.savefig(FIGURE_DIR / f"default_rate_by_{name}.png", dpi=160)
         plt.close(fig)
+
+    _save_overview_figures(data, tables)
 
     PROCESSED_PATH.parent.mkdir(parents=True, exist_ok=True)
     data.to_csv(PROCESSED_PATH, index=False)
