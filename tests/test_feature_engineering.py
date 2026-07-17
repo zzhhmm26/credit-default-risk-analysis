@@ -41,4 +41,6 @@ def test_overdue_counts_streaks_and_segments():
     assert result["overdue_months"].tolist() == [2, 2, 5]
     assert result["longest_overdue_streak"].tolist() == [2, 2, 5]
     assert result["risk_segment"].astype(str).tolist() == ["中风险", "中风险", "高风险"]
+    assert result["recent_overdue_months"].tolist() == [0, 2, 2]
+    assert result["recent_overdue_pattern"].tolist() == ["Neither month", "Both months", "Both months"]
 

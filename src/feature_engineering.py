@@ -39,6 +39,21 @@ def add_risk_features(frame: pd.DataFrame) -> pd.DataFrame:
     result["longest_overdue_streak"] = result[REPAYMENT_COLUMNS].apply(
         _longest_overdue_streak, axis=1
     )
+    # PAY_0 是最近一期，PAY_2 是再前一期。单独保留最近两期信号，
+    # 用于判断风险是否正在出现，而不只看六个月累计结果。
+    result["recent_overdue_months"] = (result[["PAY_0", "PAY_2"]] > 0).sum(axis=1)
+    latest_overdue = result["PAY_0"] > 0
+    previous_overdue = result["PAY_2"] > 0
+    result["recent_overdue_pattern"] = np.select(
+        [
+            ~latest_overdue & ~previous_overdue,
+            ~latest_overdue & previous_overdue,
+            latest_overdue & ~previous_overdue,
+            latest_overdue & previous_overdue,
+        ],
+        ["Neither month", "Previous month only", "Latest month only", "Both months"],
+        default="Unknown",
+    )
     result["risk_segment"] = pd.cut(
         result["overdue_months"], bins=[-1, 0, 2, 6], labels=["低风险", "中风险", "高风险"]
     )
