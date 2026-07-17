@@ -40,11 +40,41 @@ def run_analysis(raw_path: Path = RAW_PATH) -> dict[str, object]:
         data["AGE"], bins=[20, 29, 39, 49, 59, float("inf")],
         labels=["21-29", "30-39", "40-49", "50-59", "60+"], include_lowest=True
     )
+    data["utilization_band"] = pd.cut(
+        data["credit_utilization"],
+        bins=[float("-inf"), 0, 0.25, 0.5, 0.75, 1, float("inf")],
+        labels=["<=0", "0-25%", "25-50%", "50-75%", "75-100%", ">100%"],
+    )
+    data["repayment_ratio_band"] = pd.cut(
+        data["repayment_ratio"],
+        bins=[-0.001, 0.1, 0.3, 0.5, 1, float("inf")],
+        labels=["0-10%", "10-30%", "30-50%", "50-100%", ">100%"],
+        include_lowest=True,
+    )
+    data["avg_bill_quartile"] = pd.qcut(
+        data["avg_bill_amount"], 4, labels=["Q1 lowest", "Q2", "Q3", "Q4 highest"]
+    )
+    data["avg_payment_quartile"] = pd.qcut(
+        data["avg_payment_amount"], 4, labels=["Q1 lowest", "Q2", "Q3", "Q4 highest"]
+    )
+    data["two_month_overdue_pattern"] = pd.Series(pd.NA, index=data.index, dtype="object")
+    two_overdue = data["overdue_months"] == 2
+    data.loc[two_overdue, "two_month_overdue_pattern"] = "Scattered"
+    data.loc[
+        two_overdue & (data["longest_overdue_streak"] >= 2),
+        "two_month_overdue_pattern",
+    ] = "Consecutive"
 
     tables = {
         "credit_limit": _rate_table(data, "credit_limit_band"),
         "age": _rate_table(data, "age_band"),
         "overdue_months": _rate_table(data, "overdue_months"),
+        "longest_overdue_streak": _rate_table(data, "longest_overdue_streak"),
+        "two_month_overdue_pattern": _rate_table(data, "two_month_overdue_pattern"),
+        "credit_utilization": _rate_table(data, "utilization_band"),
+        "repayment_ratio": _rate_table(data, "repayment_ratio_band"),
+        "average_bill": _rate_table(data, "avg_bill_quartile"),
+        "average_payment": _rate_table(data, "avg_payment_quartile"),
         "risk_segment": _rate_table(data, "risk_segment"),
     }
 
