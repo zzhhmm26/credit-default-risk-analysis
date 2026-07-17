@@ -1,0 +1,285 @@
+{
+  "quality": {
+    "rows": 30000,
+    "columns": 24,
+    "duplicate_rows": 35,
+    "missing_cells": 0,
+    "target_values": [
+      0,
+      1
+    ],
+    "repayment_codes": [
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "overall_default_rate": 0.2212,
+  "zero_or_negative_average_bill_customers": 1071,
+  "undefined_repayment_ratio_customers": 966,
+  "tables": {
+    "credit_limit": [
+      {
+        "credit_limit_band": "<=100k",
+        "customers": 12498,
+        "default_rate": 0.29476716274603937
+      },
+      {
+        "credit_limit_band": "100k-200k",
+        "customers": 7880,
+        "default_rate": 0.1947969543147208
+      },
+      {
+        "credit_limit_band": "200k-500k",
+        "customers": 9416,
+        "default_rate": 0.14804587935429056
+      },
+      {
+        "credit_limit_band": ">500k",
+        "customers": 206,
+        "default_rate": 0.11165048543689321
+      }
+    ],
+    "age": [
+      {
+        "age_band": "21-29",
+        "customers": 9618,
+        "default_rate": 0.22842586816385943
+      },
+      {
+        "age_band": "30-39",
+        "customers": 11238,
+        "default_rate": 0.20252714006050898
+      },
+      {
+        "age_band": "40-49",
+        "customers": 6464,
+        "default_rate": 0.2297339108910891
+      },
+      {
+        "age_band": "50-59",
+        "customers": 2341,
+        "default_rate": 0.24861170439982913
+      },
+      {
+        "age_band": "60+",
+        "customers": 339,
+        "default_rate": 0.2831858407079646
+      }
+    ],
+    "overdue_months": [
+      {
+        "overdue_months": "0",
+        "customers": 19931,
+        "default_rate": 0.11710400883046511
+      },
+      {
+        "overdue_months": "1",
+        "customers": 4426,
+        "default_rate": 0.298237686398554
+      },
+      {
+        "overdue_months": "2",
+        "customers": 1899,
+        "default_rate": 0.3875724065297525
+      },
+      {
+        "overdue_months": "3",
+        "customers": 1154,
+        "default_rate": 0.5086655112651647
+      },
+      {
+        "overdue_months": "4",
+        "customers": 951,
+        "default_rate": 0.573080967402734
+      },
+      {
+        "overdue_months": "5",
+        "customers": 298,
+        "default_rate": 0.5738255033557047
+      },
+      {
+        "overdue_months": "6",
+        "customers": 1341,
+        "default_rate": 0.703206562266965
+      }
+    ],
+    "longest_overdue_streak": [
+      {
+        "longest_overdue_streak": "0",
+        "customers": 19931,
+        "default_rate": 0.11710400883046511
+      },
+      {
+        "longest_overdue_streak": "1",
+        "customers": 4842,
+        "default_rate": 0.31061544816191655
+      },
+      {
+        "longest_overdue_streak": "2",
+        "customers": 1930,
+        "default_rate": 0.41761658031088084
+      },
+      {
+        "longest_overdue_streak": "3",
+        "customers": 1013,
+        "default_rate": 0.5360315893385982
+      },
+      {
+        "longest_overdue_streak": "4",
+        "customers": 657,
+        "default_rate": 0.5159817351598174
+      },
+      {
+        "longest_overdue_streak": "5",
+        "customers": 286,
+        "default_rate": 0.583916083916084
+      },
+      {
+        "longest_overdue_streak": "6",
+        "customers": 1341,
+        "default_rate": 0.703206562266965
+      }
+    ],
+    "two_month_overdue_pattern": [
+      {
+        "two_month_overdue_pattern": "Consecutive",
+        "customers": 1485,
+        "default_rate": 0.37306397306397304
+      },
+      {
+        "two_month_overdue_pattern": "Scattered",
+        "customers": 414,
+        "default_rate": 0.4396135265700483
+      }
+    ],
+    "credit_utilization": [
+      {
+        "utilization_band": "<=0",
+        "customers": 1071,
+        "default_rate": 0.34360410830999066
+      },
+      {
+        "utilization_band": "0-25%",
+        "customers": 13315,
+        "default_rate": 0.16650394292151707
+      },
+      {
+        "utilization_band": "25-50%",
+        "customers": 4555,
+        "default_rate": 0.1986827661909989
+      },
+      {
+        "utilization_band": "50-75%",
+        "customers": 4878,
+        "default_rate": 0.25092250922509224
+      },
+      {
+        "utilization_band": "75-100%",
+        "customers": 5544,
+        "default_rate": 0.30735930735930733
+      },
+      {
+        "utilization_band": ">100%",
+        "customers": 637,
+        "default_rate": 0.34222919937205654
+      }
+    ],
+    "repayment_ratio": [
+      {
+        "repayment_ratio_band": "0-10%",
+        "customers": 14736,
+        "default_rate": 0.2698832790445168
+      },
+      {
+        "repayment_ratio_band": "10-30%",
+        "customers": 4016,
+        "default_rate": 0.18774900398406374
+      },
+      {
+        "repayment_ratio_band": "30-50%",
+        "customers": 1950,
+        "default_rate": 0.15333333333333332
+      },
+      {
+        "repayment_ratio_band": "50-100%",
+        "customers": 5394,
+        "default_rate": 0.1546162402669633
+      },
+      {
+        "repayment_ratio_band": ">100%",
+        "customers": 2938,
+        "default_rate": 0.1446562287270252
+      }
+    ],
+    "average_bill": [
+      {
+        "avg_bill_quartile": "Q1 lowest",
+        "customers": 7500,
+        "default_rate": 0.2364
+      },
+      {
+        "avg_bill_quartile": "Q2",
+        "customers": 7500,
+        "default_rate": 0.21706666666666666
+      },
+      {
+        "avg_bill_quartile": "Q3",
+        "customers": 7500,
+        "default_rate": 0.2264
+      },
+      {
+        "avg_bill_quartile": "Q4 highest",
+        "customers": 7500,
+        "default_rate": 0.20493333333333333
+      }
+    ],
+    "average_payment": [
+      {
+        "avg_payment_quartile": "Q1 lowest",
+        "customers": 7500,
+        "default_rate": 0.3116
+      },
+      {
+        "avg_payment_quartile": "Q2",
+        "customers": 7500,
+        "default_rate": 0.2608
+      },
+      {
+        "avg_payment_quartile": "Q3",
+        "customers": 7500,
+        "default_rate": 0.18013333333333334
+      },
+      {
+        "avg_payment_quartile": "Q4 highest",
+        "customers": 7500,
+        "default_rate": 0.13226666666666667
+      }
+    ],
+    "risk_segment": [
+      {
+        "risk_segment": "低风险",
+        "customers": 19931,
+        "default_rate": 0.11710400883046511
+      },
+      {
+        "risk_segment": "中风险",
+        "customers": 6325,
+        "default_rate": 0.3250592885375494
+      },
+      {
+        "risk_segment": "高风险",
+        "customers": 3744,
+        "default_rate": 0.5998931623931624
+      }
+    ]
+  }
+}
