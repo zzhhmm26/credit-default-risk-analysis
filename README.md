@@ -9,7 +9,7 @@
 ![Stage](https://img.shields.io/badge/Stage-Business%20Insights-16A34A)
 ![License](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-0EA5E9)
 
-基于 UCI `Default of Credit Card Clients` 数据集，分析客户授信、账单、还款与历史逾期行为和下一期违约之间的关系。
+基于UCI `Default of Credit Card Clients`数据集，分析客户授信、账单、还款与历史逾期行为和下一期违约之间的关系。
 
 [核心发现](#核心发现) · [分析流程](#分析流程) · [项目结构](#项目结构) · [快速复现](#快速复现) · [数据与限制](#数据来源与使用限制)
 
