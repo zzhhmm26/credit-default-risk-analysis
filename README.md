@@ -6,7 +6,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.13-3776AB?logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?logo=pandas&logoColor=white)
-![Stage](https://img.shields.io/badge/Stage-Business%20Insights-16A34A)
+![Stage](https://img.shields.io/badge/Stage-Modeling%20Baseline-16A34A)
 ![License](https://img.shields.io/badge/Data%20License-CC%20BY%204.0-0EA5E9)
 
 基于UCI `Default of Credit Card Clients`数据集，分析客户授信、账单、还款与历史逾期行为和下一期违约之间的关系。
@@ -120,8 +120,11 @@ credit-default-risk-analysis/
 | [`notebooks/01_data_understanding.ipynb`](notebooks/01_data_understanding.ipynb) | 数据结构与质量检查 |
 | [`notebooks/02_risk_analysis.ipynb`](notebooks/02_risk_analysis.ipynb) | 风险指标与业务分析 |
 | [`src/analysis.py`](src/analysis.py) | 第二轮分层效果、近期预警与风险矩阵分析 |
+| [`src/modeling.py`](src/modeling.py) | 第二阶段机器学习建模、指标评估与图表生成 |
 | [`src/feature_engineering.py`](src/feature_engineering.py) | 可测试的风险特征构造 |
 | [`reports/analysis_summary.json`](reports/analysis_summary.json) | 完整数值结果 |
+| [`reports/modeling_report.md`](reports/modeling_report.md) | 建模结果、业务解释与限制说明 |
+| [`reports/modeling_summary.json`](reports/modeling_summary.json) | 可复现的机器学习指标摘要 |
 | [`docs/data_dictionary.md`](docs/data_dictionary.md) | 字段含义与边界处理 |
 
 ## 快速复现
@@ -133,10 +136,11 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 python -m src.fetch_data
 python -m src.analysis
+python -m src.modeling
 python -m pytest -q
 ```
 
-预期结果：获取 30,000 条数据，生成分析摘要与图表，并通过 5 个测试。
+预期结果：获取 30,000 条数据，生成分析/建模摘要与图表，并通过 8 个测试。
 
 ## 数据来源与使用限制
 
@@ -147,9 +151,50 @@ python -m pytest -q
 - 性别、婚姻状况等字段不应被简单解释为授信依据。
 - 项目仅用于学习和作品展示，不用于真实个人的自动化信贷决策。
 
+## 第二阶段：机器学习建模
+
+第一阶段解决“哪些客户群体风险更高”，第二阶段进一步建立预测模型，尝试根据客户历史账单、还款和逾期行为识别下个月违约风险。
+
+本阶段比较了三个模型：
+
+- `Dummy baseline`：只作为最低基线，用来提醒我们不能只看 Accuracy。
+- `Logistic Regression`：可解释的线性基线模型。
+- `Random Forest`：捕捉非线性关系的树模型。
+
+| 模型 | ROC-AUC | PR-AUC | Accuracy | Precision | Recall | F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| Dummy baseline | 0.500 | 0.221 | 0.779 | 0.000 | 0.000 | 0.000 |
+| Logistic Regression | 0.745 | 0.490 | 0.747 | 0.446 | 0.592 | 0.509 |
+| Random Forest | 0.776 | 0.556 | 0.775 | 0.493 | 0.595 | 0.539 |
+
+当前最佳模型按 PR-AUC 选择，为 `Random Forest`。在测试集中，如果只审核预测风险最高的 20% 客户，可以覆盖约 **51.09%** 的实际违约客户，审核组违约率为 **56.50%**，约为总体测试集违约率的 **2.55 倍**。
+
+<table>
+  <tr>
+    <td width="50%"><img src="reports/figures/modeling_roc_curve.png" alt="ROC 曲线"></td>
+    <td width="50%"><img src="reports/figures/modeling_precision_recall_curve.png" alt="Precision-Recall 曲线"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>ROC-AUC：模型排序能力</b></td>
+    <td align="center"><b>PR-AUC：类别不均衡下更有参考价值</b></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="reports/figures/modeling_feature_importance.png" alt="特征重要性"></td>
+    <td width="50%"><img src="reports/figures/modeling_threshold_tradeoff.png" alt="阈值取舍"></td>
+  </tr>
+  <tr>
+    <td align="center"><b>重要特征集中在逾期与还款行为</b></td>
+    <td align="center"><b>阈值越低，召回更高但误报更多</b></td>
+  </tr>
+</table>
+
+完整建模说明见 [`reports/modeling_report.md`](reports/modeling_report.md)，机器学习结果见 [`reports/modeling_summary.json`](reports/modeling_summary.json)。
+
+> 模型输出的是相关性预测分数，不代表因果关系；当前版本用于学习与作品展示，不用于真实授信、拒绝客户或自动化金融决策。
+
 ## 下一阶段
 
-- 建立逻辑回归基准模型，并与决策树、随机森林比较。
-- 使用交叉验证、ROC-AUC、PR-AUC、Recall 和 F1，避免只看 Accuracy。
-- 分析不同决策阈值下漏判违约客户与误拒正常客户的业务成本。
+- 使用交叉验证和调参进一步验证模型稳定性。
+- 加入成本矩阵，分析不同阈值下漏判违约客户与误伤正常客户的业务代价。
+- 使用 permutation importance 或 SHAP 提升模型解释质量。
 - 检查敏感属性相关的群体差异与潜在偏差。

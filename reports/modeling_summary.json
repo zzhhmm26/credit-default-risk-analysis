@@ -1,0 +1,228 @@
+{
+  "data": {
+    "rows": 30000,
+    "features": [
+      "LIMIT_BAL",
+      "AGE",
+      "PAY_0",
+      "PAY_2",
+      "PAY_3",
+      "PAY_4",
+      "PAY_5",
+      "PAY_6",
+      "BILL_AMT1",
+      "BILL_AMT2",
+      "BILL_AMT3",
+      "BILL_AMT4",
+      "BILL_AMT5",
+      "BILL_AMT6",
+      "PAY_AMT1",
+      "PAY_AMT2",
+      "PAY_AMT3",
+      "PAY_AMT4",
+      "PAY_AMT5",
+      "PAY_AMT6",
+      "avg_bill_amount",
+      "avg_payment_amount",
+      "credit_utilization",
+      "repayment_ratio",
+      "overdue_months",
+      "max_overdue_status",
+      "longest_overdue_streak",
+      "recent_overdue_months"
+    ],
+    "feature_count": 28,
+    "target": "default_next_month",
+    "overall_default_rate": 0.2212,
+    "train_rows": 24000,
+    "test_rows": 6000,
+    "train_default_rate": 0.22120833333333334,
+    "test_default_rate": 0.22116666666666668,
+    "random_state": 42
+  },
+  "models": {
+    "dummy_baseline": {
+      "roc_auc": 0.5,
+      "pr_auc": 0.22116666666666668,
+      "accuracy": 0.7788333333333334,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "logistic_regression": {
+      "roc_auc": 0.7447612678519565,
+      "pr_auc": 0.48962729021892293,
+      "accuracy": 0.7468333333333333,
+      "precision": 0.445578231292517,
+      "recall": 0.5923134890730972,
+      "f1": 0.5085732772565513
+    },
+    "random_forest": {
+      "roc_auc": 0.7759491868420794,
+      "pr_auc": 0.5558189817636732,
+      "accuracy": 0.7748333333333334,
+      "precision": 0.49250936329588013,
+      "recall": 0.5945742275810098,
+      "f1": 0.5387504267668146
+    }
+  },
+  "best_model_by_pr_auc": "random_forest",
+  "threshold_tradeoff": [
+    {
+      "threshold": 0.2,
+      "predicted_positive_share": 0.7708333333333334,
+      "precision": 0.26854054054054055,
+      "recall": 0.9359457422758101,
+      "f1": 0.4173387096774194,
+      "true_positive": 1242,
+      "false_positive": 3383,
+      "false_negative": 85,
+      "true_negative": 1290
+    },
+    {
+      "threshold": 0.3,
+      "predicted_positive_share": 0.5561666666666667,
+      "precision": 0.32903805813605036,
+      "recall": 0.827430293896006,
+      "f1": 0.47084048027444253,
+      "true_positive": 1098,
+      "false_positive": 2239,
+      "false_negative": 229,
+      "true_negative": 2434
+    },
+    {
+      "threshold": 0.4,
+      "predicted_positive_share": 0.3725,
+      "precision": 0.40313199105145414,
+      "recall": 0.678975131876413,
+      "f1": 0.5058955642897248,
+      "true_positive": 901,
+      "false_positive": 1334,
+      "false_negative": 426,
+      "true_negative": 3339
+    },
+    {
+      "threshold": 0.5,
+      "predicted_positive_share": 0.267,
+      "precision": 0.49250936329588013,
+      "recall": 0.5945742275810098,
+      "f1": 0.5387504267668146,
+      "true_positive": 789,
+      "false_positive": 813,
+      "false_negative": 538,
+      "true_negative": 3860
+    },
+    {
+      "threshold": 0.6,
+      "predicted_positive_share": 0.20616666666666666,
+      "precision": 0.5602263540824576,
+      "recall": 0.5222305953278071,
+      "f1": 0.5405616224648986,
+      "true_positive": 693,
+      "false_positive": 544,
+      "false_negative": 634,
+      "true_negative": 4129
+    }
+  ],
+  "review_capacity": [
+    {
+      "review_share": 0.1,
+      "reviewed_customers": 600,
+      "defaults_found": 417,
+      "default_capture_rate": 0.3142426525998493,
+      "review_group_default_rate": 0.695,
+      "lift_vs_overall": 3.1424265259984923
+    },
+    {
+      "review_share": 0.2,
+      "reviewed_customers": 1200,
+      "defaults_found": 678,
+      "default_capture_rate": 0.5109269027882442,
+      "review_group_default_rate": 0.565,
+      "lift_vs_overall": 2.5546345139412203
+    },
+    {
+      "review_share": 0.3,
+      "reviewed_customers": 1800,
+      "defaults_found": 832,
+      "default_capture_rate": 0.6269781461944235,
+      "review_group_default_rate": 0.4622222222222222,
+      "lift_vs_overall": 2.0899271539814115
+    }
+  ],
+  "random_forest_feature_importance": [
+    {
+      "feature": "max_overdue_status",
+      "importance": 0.09470580856582463
+    },
+    {
+      "feature": "longest_overdue_streak",
+      "importance": 0.09294220294135891
+    },
+    {
+      "feature": "PAY_0",
+      "importance": 0.08701568204727728
+    },
+    {
+      "feature": "overdue_months",
+      "importance": 0.0868062145283188
+    },
+    {
+      "feature": "recent_overdue_months",
+      "importance": 0.07775000248541292
+    },
+    {
+      "feature": "credit_utilization",
+      "importance": 0.04175558962127806
+    },
+    {
+      "feature": "avg_payment_amount",
+      "importance": 0.036275074616526494
+    },
+    {
+      "feature": "repayment_ratio",
+      "importance": 0.03268504531906676
+    },
+    {
+      "feature": "BILL_AMT1",
+      "importance": 0.032127149082137214
+    },
+    {
+      "feature": "LIMIT_BAL",
+      "importance": 0.030084725412693608
+    },
+    {
+      "feature": "avg_bill_amount",
+      "importance": 0.03005248302340666
+    },
+    {
+      "feature": "PAY_2",
+      "importance": 0.029276274206419654
+    },
+    {
+      "feature": "PAY_AMT1",
+      "importance": 0.027920258275282342
+    },
+    {
+      "feature": "PAY_AMT2",
+      "importance": 0.027241777993362904
+    },
+    {
+      "feature": "PAY_AMT3",
+      "importance": 0.0271351938659332
+    }
+  ],
+  "figures": [
+    "reports/figures/modeling_roc_curve.png",
+    "reports/figures/modeling_precision_recall_curve.png",
+    "reports/figures/modeling_confusion_matrix.png",
+    "reports/figures/modeling_feature_importance.png",
+    "reports/figures/modeling_threshold_tradeoff.png"
+  ],
+  "limitations": [
+    "模型只用于学习与作品展示，不用于真实授信决策。",
+    "当前版本未做时间外验证，不能证明对未来时期同样稳定。",
+    "第一版刻意不使用 SEX、EDUCATION、MARRIAGE 等人口属性，以降低敏感属性误用风险。",
+    "模型输出的是相关性预测分数，不代表因果关系。"
+  ]
+}
